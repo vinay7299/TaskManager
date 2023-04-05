@@ -1,1 +1,185 @@
 
+.root {
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid {
+    background-image: linear-gradient(to right, #2560c7, #4971d1, #6482db,
+            #7c94e5, #93a6ef, #93b0f5, #95bafa, #98c4ff, #83c8ff, #6cccff, #4fd0ff, #2ad3fc);
+}
+
+.drag-over {
+    border: dashed 3px red;
+}
+
+.drag {
+    border: 5px solid black !important;
+    font-weight: 25;
+}
+
+.hide {
+    display: none;
+}
+
+.box {
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 429px;
+    width: auto;
+}
+
+.static {
+    pointer-events: none;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* border: 1px solid yellow; */
+}
+
+.grid-item {
+    height: 480px;
+    /* border: 1px solid red; */
+    border-radius: 4px;
+    margin: 10px;
+    position: relative;
+    background-color: rgb(245, 234, 232);
+}
+
+.heading {
+    position: relative;
+    /* height: 50px; */
+    z-index: 1;
+    margin: 10px 10px;
+}
+
+.sectionName {
+    margin: 5px 10px;
+}
+
+.task-input {
+    /* border: 1px solid blue; */
+    margin: 10px;
+    text-align: center;
+    font-size: 18px;
+    padding: 40px 0;
+}
+
+.task-input .taskInput {
+    border-radius: 4px;
+    border: 1px solid gray;
+    width: 200px;
+    margin-left: 5px;
+    padding: 5px;
+}
+
+.task-input .create-btn {
+    padding: 5px 10px;
+    margin-top: 25px;
+    /* border-radius: 4px; */
+}
+
+.task {
+    background-color: white;
+    /* border: 1px solid blue; */
+    height: 100px;
+    width: auto;
+    margin: 10px 10px;
+    box-shadow: 1px 1px 5px lightgray;
+    border-radius: 4px;
+}
+
+.taskName {
+    display: inline-block;
+    width: auto;
+    text-align: left;
+    padding: 10px;
+}
+
+.button-div {
+    /* border: 1px solid red ; */
+    display: block;
+    margin-top: 30px;
+}
+
+.desc-button {
+    bottom: 0px;
+    right: 0px;
+    margin-left: 190px;
+}
+
+.modal {
+    /* display: none; */
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    /* overflow: auto; */
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+.modal-content {
+    background-color: rgb(245, 234, 232);
+    width: 60%;
+    height: 60%;
+    margin: 8% auto;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.task-heading-div {
+    /* display: relative; */
+    /* border: 1px solid red; */
+    margin: 5px auto;
+    padding: 10px;
+    width: 97%;
+    height: 15%;
+    text-align: center;
+    overflow-y: auto;
+}
+
+.task-heading {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 25;
+    /* word-wrap: normal; */
+}
+
+.task-description {
+    /* border: 1px solid red; */
+    height: 55%;
+    width: 97%;
+    margin: 5px auto;
+    padding: 10px;
+}
+
+.description-area {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+}
+
+.description-controls {
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: space-between;
+    height: 10%;
+    width: 97%;
+    margin: 5px auto;
+    padding: 10px;
+}
+
+.description-controls button {
+    padding: 10px;
+    font-size: 15px;
+}

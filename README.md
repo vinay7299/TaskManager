@@ -1,1 +1,1 @@
-# TaskManager
+Task Manage to create, sort and manage tasks.
