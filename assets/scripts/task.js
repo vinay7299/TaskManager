@@ -88,7 +88,6 @@ function addTask() {
         let descButton_attributes = {
             class: "desc-button",
             id: "descButton" + newTask.taskId,
-            // onclick: "taskDesc(newTask.modalId)",
         };
 
         //  creating attributes for modal elements
@@ -111,7 +110,6 @@ function addTask() {
         let closeButton_attributes = {
             class: "cancel-button",
             id: "cancelButton" + newTask.taskId,
-            // onclick: "cancel(newTask.modalId)",
         };
 
         //  setting attributes
@@ -203,9 +201,6 @@ function dragStart(event) {
     event.dataTransfer.setData("text", event.target.id);
     console.log("dragging started: " + event.target.id);
     event.target.classList.add("drag");
-    // setTimeout(() => {
-    //     event.target.classList.add("hide");
-    // }, 1);
 }
 
 function dragEnter(event) {
@@ -238,7 +233,6 @@ function drop(event) {
 
     let dropZone = event.target;
     dropZone.appendChild(task);
-    // task.classList.remove("hide");
     task.classList.remove("drag");
     event.dataTransfer.clearData();
 }
