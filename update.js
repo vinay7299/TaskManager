@@ -3,9 +3,8 @@ let taskList = [];
 
 //  class for creating a new task
 class Task {
-    constructor(taskName) {
+    constructor() {
         this.instance = ++Task.count;
-        this.taskName = taskName;
         this.taskId = `task${this.instance}`;
         this.modalId = `modal${this.instance}`;
         this.description = "";
@@ -41,45 +40,30 @@ function addTask() {
     //  taking task name from input
     let input = document.getElementById("taskInput").value;
 
-    //  checking if input field is empty
+    //  checking if input field is not empty
     if (input) {
-        // creating new Task instance
-        let newTask = new Task(input);
-        taskList.push(newTask);
-        console.log(newTask.taskId, newTask.modalId);
-
-        //  creating task in dom
+        //  getting open section reference
         let open = document.getElementById("open");
 
+        //  creating task container div
         let task = document.createElement("div");
 
+        //  span containing task name
         let taskName = document.createElement("span");
 
+        //  div containing buttons
         let buttonDiv = document.createElement("div");
 
+        //  button to open description modal
         let descButton = document.createElement("button");
         descButton.innerHTML = "Task Description";
-
-        //  creating modal in dom
-        let modal = document.createElement("div");
-        let modalContent = document.createElement("div");
-        let taskHeadDiv = document.createElement("div");
-        let taskDescDiv = document.createElement("div");
-        let descControlDiv = document.createElement("div");
-        let descSpan = document.createElement("span");
-        descSpan.textContent = newTask.taskName;
-        let descTextArea = document.createElement("textarea");
-        let saveButton = document.createElement("button");
-        saveButton.innerHTML = "Save Description";
-        let closeButton = document.createElement("button");
-        closeButton.innerHTML = "Close";
 
         //  creating attributes for new elements
         let task_attributes = {
             class: "task",
             draggable: "true",
             ondragstart: "dragStart(event)",
-            id: newTask.taskId,
+            id: "generateId()",
             ondragover: "",
             ondragleave: "",
         };
@@ -87,12 +71,39 @@ function addTask() {
         let buttonDiv_attributes = { class: "button-div", id: "buttonDiv" };
         let descButton_attributes = {
             class: "desc-button",
-            id: "descButton" + newTask.taskId,
-            // onclick: "taskDesc(newTask.modalId)",
+            id: "descButton",
+            onclick: "taskDesc(modalId)",
         };
 
+        //  setting attributes
+        setAttributes(task, task_attributes);
+        setAttributes(taskName, taskName_attributes);
+        setAttributes(buttonDiv, buttonDiv_attributes);
+        setAttributes(descButton, descButton_attributes);
+
+        //  appending new elements to open
+        taskName.appendChild(document.createTextNode(input));
+        buttonDiv.appendChild(descButton);
+        task.appendChild(taskName);
+        task.appendChild(buttonDiv);
+        open.appendChild(task);
+
+        //  creating modal
+        let modal = document.createElement("div");
+        let modalContent = document.createElement("div");
+        let taskHeadDiv = document.createElement("div");
+        let taskDescDiv = document.createElement("div");
+        let descControlDiv = document.createElement("div");
+        let descSpan = document.createElement("span");
+        // descSpan.innerHTML = input;
+        let descTextArea = document.createElement("textarea");
+        let editButton = document.createElement("button");
+        editButton.innerHTML = "Edit Description";
+        let closeButton = document.createElement("button");
+        closeButton.innerHTML = "Close";
+
         //  creating attributes for modal elements
-        let modal_attributes = { class: "modal", id: newTask.modalId };
+        let modal_attributes = { class: "modal", id: modalId };
         let modalContent_attributes = {
             class: "modal-content",
             id: "modalContent",
@@ -107,18 +118,11 @@ function addTask() {
             cols: "30",
             rows: "10",
         };
-        let saveButton_attributes = { class: "action-button" };
+        let editButton_attributes = { class: "action-button" };
         let closeButton_attributes = {
             class: "cancel-button",
-            id: "cancelButton" + newTask.taskId,
-            // onclick: "cancel(newTask.modalId)",
+            onclick: "cancel(this)",
         };
-
-        //  setting attributes
-        setAttributes(task, task_attributes);
-        setAttributes(taskName, taskName_attributes);
-        setAttributes(buttonDiv, buttonDiv_attributes);
-        setAttributes(descButton, descButton_attributes);
 
         //  setting modal element attributes
         setAttributes(modal, modal_attributes);
@@ -128,21 +132,14 @@ function addTask() {
         setAttributes(descControlDiv, descControlDiv_attributes);
         setAttributes(descSpan, descSpan_attributes);
         setAttributes(descTextArea, descTextArea_attributes);
-        setAttributes(saveButton, saveButton_attributes);
+        setAttributes(editButton, editButton_attributes);
         setAttributes(closeButton, closeButton_attributes);
-
-        //  appending new elements to open
-        taskName.appendChild(document.createTextNode(input));
-        buttonDiv.appendChild(descButton);
-        task.appendChild(taskName);
-        task.appendChild(buttonDiv);
-        open.appendChild(task);
 
         //  appending modal
         let container = document.getElementById("container");
         taskHeadDiv.appendChild(descSpan);
         taskDescDiv.appendChild(descTextArea);
-        descControlDiv.appendChild(saveButton);
+        descControlDiv.appendChild(editButton);
         descControlDiv.appendChild(closeButton);
         modalContent.appendChild(taskHeadDiv);
         modalContent.appendChild(taskDescDiv);
@@ -150,51 +147,20 @@ function addTask() {
         modal.appendChild(modalContent);
         container.appendChild(modal);
 
-        modal.style.display = "none";
-
-        //  adding event listener
-        descButton.setAttribute("onclick", "taskDesc(event)");
-        closeButton.setAttribute("onclick", "cancel(event)");
-        saveButton.setAttribute("onclick", "save(event)");
+        modal.classList.add("hide");
     } else {
         alert("Input Task Name to continue");
     }
 }
 
 //  task description button function
-function taskDesc(event) {
-    let id = event.target.id;
-    id = id.substr(10, id.length - 1);
-    let task = taskList.filter((task) => {
-        return task.taskId == id;
-    });
-    let modal = document.getElementById(`${task[0].modalId}`);
-    modal.style.display = "block";
+function taskDesc(modalId) {
+    modalId.classList.remove("hide");
 }
 
 //  modal close button function
-function cancel(event) {
-    let id = event.target.id;
-    id = id.substr(12, id.length - 1);
-    let task = taskList.filter((task) => {
-        return task.taskId == id;
-    });
-    let modal = document.getElementById(`${task[0].modalId}`);
-    modal.style.display = "none";
-    let textArea = document.querySelector("textarea");
-    textArea.innerText = task[0].description;
-}
-
-//  modal save button function
-function save(event) {
-    let id = event.target.id;
-    id = id.substr(12, id.length - 1);
-    let task = taskList.filter((task) => {
-        return task.taskId == id;
-    });
-    let textArea = document.querySelector("textarea");
-    let desc = textArea.innerText;
-    task[0].description = desc;
+function cancel(ref) {
+    ref.parentNode.parentNode.parentNode.classList.add("hide");
 }
 
 //  dragging functionality
