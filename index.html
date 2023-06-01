@@ -1,15 +1,17 @@
 <html>
-    <head>
-        <link rel="stylesheet" href="./assets/styles/global.css">
-        <script src="./assets/scripts/task.js"></script>
-    </head>
-    <body>
-        <div class="container-fluid" id="container">
+
+<head>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./App.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid" id="container">
         <div class="task-input">
             <!-- <form class="task-form"> -->
-                <label for="task">Create a new Task:</label>
-                <input type="text" id="taskInput" name="taskInput" class="taskInput" placeholder="Task Name"><br>
-                <button type="input" id="create-btn" class="create-btn" onclick="addTask()">Create</button>
+            <label for="task">Create a new Task:</label>
+            <input type="text" id="taskInput" name="taskInput" class="taskInput" placeholder="Task Name"><br>
+            <button type="input" id="create-btn" class="create-btn" onclick="addTask()">Create</button>
             <!-- </form> -->
         </div>
         <div class="grid-container">
@@ -17,27 +19,50 @@
                 <div class="heading" id="heading">
                     <h3 class="sectionName">OPEN</h3>
                 </div>
-                <div class="open box" id="open" ondragover="dragOver(event)" ondrop="drop(event)" ondragleave="dragLeave(event)"></div>
+                <div class="open box" id="open" ondragover="dragOver(event)" ondrop="drop(event)"
+                    ondragleave="dragLeave(event)"></div>
             </div>
             <div class="grid-item">
                 <div class="heading" id="heading">
                     <h3 class="sectionName">IN PROGRESS</h3>
                 </div>
-                <div class="progress box" id="progress" ondragover="dragOver(event)" ondrop="drop(event)" ondragleave="dragLeave(event)"></div>
+                <div class="progress box" id="progress" ondragover="dragOver(event)" ondrop="drop(event)"
+                    ondragleave="dragLeave(event)"></div>
             </div>
             <div class="grid-item">
                 <div class="heading" id="heading">
                     <h3 class="sectionName">IN REVIEW</h3>
                 </div>
-                <div class="review box" id="review" ondragover="dragOver(event)" ondrop="drop(event)" ondragleave="dragLeave(event)"></div>
+                <div class="review box" id="review" ondragover="dragOver(event)" ondrop="drop(event)"
+                    ondragleave="dragLeave(event)"></div>
             </div>
             <div class="grid-item">
                 <div class="heading" id="heading">
                     <h3 class="sectionName">DONE</h3>
                 </div>
-                <div class="done box" id="done" ondragover="dragOver(event)" ondrop="drop(event)" ondragleave="dragLeave(event)"></div>
+                <div class="done box" id="done" ondragover="dragOver(event)" ondrop="drop(event)"
+                    ondragleave="dragLeave(event)"></div>
             </div>
         </div>
     </div>
-    </body>
+
+    <!-- ///////////////////////////// modal ////////////////////////////// -->
+
+    <div class="modal" id="modal" currentTask="" style="display: none;">
+        <div class="modal-content" id="modalContent">
+            <div class="task-heading-div">
+                <span class="task-heading" id="taskHeading"></span>
+            </div>
+            <div class="task-description">
+                <textarea name="descriptionArea" id="" cols="30" rows="10" class="description-area"></textarea>
+            </div>
+            <div class="description-controls">
+                <button class="action-button" onclick="save(event)">Save Description</button>
+                <button class="cancel-button" id="cancelButton" onclick="cancel(event)">Close</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
 </html>
