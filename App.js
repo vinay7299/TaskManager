@@ -207,16 +207,18 @@ function drop(event) {
 
     let dropZone = event.target;
 
+    dropZone.appendChild(task);
+    task.classList.remove("drag");
+
     let status = dropZone.id;
 
+    taskList = JSON.parse(localStorage.getItem("taskList"));
     let droppedTask = taskList.filter((task) => {
         return task.taskId == id;
     });
 
     droppedTask[0].status = status;
 
-    dropZone.appendChild(task);
-    task.classList.remove("drag");
     event.dataTransfer.clearData();
 
     localStorage.setItem("taskList", JSON.stringify(taskList));
