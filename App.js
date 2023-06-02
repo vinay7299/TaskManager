@@ -60,6 +60,9 @@ function addTask() {
 
         let buttonDiv = document.createElement("div");
 
+        let delButton = document.createElement("button");
+        delButton.innerHTML = "Delete Task";
+
         let descButton = document.createElement("button");
         descButton.innerHTML = "Task Description";
 
@@ -74,6 +77,10 @@ function addTask() {
         };
         let taskName_attributes = { class: "taskName" };
         let buttonDiv_attributes = { class: "button-div", id: "buttonDiv" };
+        let delButton_attributes = {
+            class: "del-button",
+            id: "delButton" + newTask.taskId,
+        };
         let descButton_attributes = {
             class: "desc-button",
             id: "descButton" + newTask.taskId,
@@ -83,10 +90,12 @@ function addTask() {
         setAttributes(task, task_attributes);
         setAttributes(taskName, taskName_attributes);
         setAttributes(buttonDiv, buttonDiv_attributes);
+        setAttributes(delButton, delButton_attributes);
         setAttributes(descButton, descButton_attributes);
 
         //  appending new elements to open
         taskName.appendChild(document.createTextNode(input));
+        buttonDiv.appendChild(delButton);
         buttonDiv.appendChild(descButton);
         task.appendChild(taskName);
         task.appendChild(buttonDiv);
@@ -94,9 +103,26 @@ function addTask() {
 
         //  adding event listener
         descButton.setAttribute("onclick", "taskDesc(event)");
+        delButton.setAttribute("onclick", "delTask(event)");
     } else {
         alert("Input Task Name to continue");
     }
+}
+
+//  delete Task button function
+function delTask(event) {
+    let id = event.target.id;
+    id = id.substr(9, id.length - 1);
+    console.log(id);
+
+    document.getElementById(id).style.display = "none";
+
+    taskList = JSON.parse(localStorage.getItem("taskList"));
+    taskList = taskList.filter((task) => {
+        return task.taskId != id;
+    });
+
+    localStorage.setItem("taskList", JSON.stringify(taskList));
 }
 
 //  task description button function
@@ -212,8 +238,10 @@ setTimeout(() => {
 
         let buttonDiv = document.createElement("div");
 
-        let descButton = document.createElement("button");
+        let delButton = document.createElement("button");
+        delButton.innerHTML = "Delete Task";
 
+        let descButton = document.createElement("button");
         descButton.innerHTML = "Task Description";
 
         //  creating attributes for new elements
@@ -227,26 +255,32 @@ setTimeout(() => {
         };
         let taskName_attributes = { class: "taskName" };
         let buttonDiv_attributes = { class: "button-div", id: "buttonDiv" };
+        let delButton_attributes = {
+            class: "del-button",
+            id: "delButton" + element.taskId,
+        };
         let descButton_attributes = {
             class: "desc-button",
             id: "descButton" + element.taskId,
         };
-        console.log(descButton_attributes.id);
 
         //  setting attributes
         setAttributes(task, task_attributes);
         setAttributes(taskName, taskName_attributes);
         setAttributes(buttonDiv, buttonDiv_attributes);
+        setAttributes(delButton, delButton_attributes);
         setAttributes(descButton, descButton_attributes);
 
         //  appending new elements to section
         taskName.appendChild(document.createTextNode(element.taskName));
+        buttonDiv.appendChild(delButton);
         buttonDiv.appendChild(descButton);
         task.appendChild(taskName);
         task.appendChild(buttonDiv);
         section.appendChild(task);
 
         //  adding event listener
+        delButton.setAttribute("onclick", "delTask(event)");
         descButton.setAttribute("onclick", "taskDesc(event)");
     });
 }, 1);
